@@ -8,13 +8,6 @@ import Header from './components/header/header.component';
 
 import './App.css';
 
-// const HatsPage = (props) => (
-//   <div>
-//     {console.log(props)}
-//     <h1>HATS</h1>
-//   </div>
-// )
-
 class App extends React.Component {
   
   render() {
