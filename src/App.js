@@ -5,7 +5,7 @@ import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 import './App.css';
 
@@ -21,10 +21,26 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => { // built-in function
+      if (userAuth) { // check if Snapshot has changed (probably not, since we're not changing it here)
+        const userRef = await createUserProfileDocument(userAuth);
 
-      console.log(user);
+        userRef.onSnapshot(snapShot => { // built-in function, similar to calling onAuthStateChanged
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data()
+              } // get id from Snapshot, and displayName, email and createdAt from our database
+            }, 
+            () => {
+              console.log(this.state); // 2nd parameter of setState makes sure the state has updated before running console.log
+            }
+          ); // get data stored in snapShot, whether user exists in database already, or if new user is created
+        });
+      } else {
+        this.setState({ currentUser: userAuth });
+      }
     });
   }
 
