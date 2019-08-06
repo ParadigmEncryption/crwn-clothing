@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import HomePage from './pages/homepage/homepage.component';
@@ -47,15 +47,20 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route path='/shop' component={ShopPage} />
-          <Route path='/signin' component={SignInAndSignUpPage} />
+          <Route exact path='/signin' render={() => this.props.currentUser ? (<Redirect to='/' />) : (<SignInAndSignUpPage />)} />
         </Switch>
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentUser: user => dispatch(setCurrentUser(user))
-});
+const mapStateToProps = ({ user }) => ({  // destructure user.reducer
+  currentUser: user.currentUser
+})  // same as in Header--get access to currentUser
 
-export default connect(null, mapDispatchToProps)(App);
+const mapDispatchToProps = dispatch => ({ 
+  setCurrentUser: user => dispatch(setCurrentUser(user))
+});  // set setCurrentUser to user by passing in argument (user), invoke setCurrentUser, and return the payload (user)
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+    // mapStateToProps gives access to this.props.currentUser

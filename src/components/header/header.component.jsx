@@ -28,14 +28,13 @@ const Header = ({ currentUser }) => (
         :
         <Link className="option" to="/signin">
           SIGN IN
-        </Link>
-      }
+        </Link>      }
     </div>
   </div>
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = state => ({   // state is root-reducer
   currentUser: state.user.currentUser
-});
+});   // Header needs access to currentUser to determine if we're signed in or not
 
 export default connect(mapStateToProps)(Header);
