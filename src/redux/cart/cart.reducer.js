@@ -1,4 +1,5 @@
 import CartActionTypes from './cart.types';
+import { addItemToCart } from './cart.utils';
 
 const INITIAL_STATE = {
   hidden: true,
@@ -15,7 +16,8 @@ const cartReducer = ( state = INITIAL_STATE, action ) => {
     case CartActionTypes.ADD_ITEM:
       return {
         ...state,  // pass in hidden value as well
-        cartItems: [...state.cartItems, action.payload]  // must be NEW array in order for component to re-render, and adding the newest item to the end
+        cartItems: addItemToCart(state.cartItems, action.payload)  // must be NEW array in order for component to re-render
+        // cartItems: [...state.cartItems, action.payload]  // this works, but does not account for items already in cart
       };
     default: {
       return state;
