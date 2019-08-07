@@ -59,7 +59,7 @@ const mapStateToProps = ({ user }) => ({  // destructure user.reducer
 })  // same as in Header--get access to currentUser
 
 const mapDispatchToProps = dispatch => ({ 
-  setCurrentUser: user => dispatch(setCurrentUser(user))
+  setCurrentUser: user => dispatch(setCurrentUser(user))  // first 'setCurrentUser' can be any name I think
 });  // set setCurrentUser to user by passing in argument (user), invoke setCurrentUser, and return the payload (user)
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

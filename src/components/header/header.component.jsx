@@ -10,7 +10,7 @@ import { ReactComponent as Logo } from '../../assets/crown.svg';
 
 import './header.styles.scss';
 
-const Header = ({ currentUser }) => (
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link className="logo-container" to="/">
       <Logo className="logo" />
@@ -34,12 +34,13 @@ const Header = ({ currentUser }) => (
         )}
         <CartIcon />
     </div>
-    <CartDropdown />
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 
-const mapStateToProps = state => ({   // state is root-reducer
-  currentUser: state.user.currentUser
-});   // Header needs access to currentUser to determine if we're signed in or not
+const mapStateToProps = ({ user: {currentUser}, cart: {hidden} })=> ({   // destructure nested values from state to include user and cart
+  currentUser,
+  hidden
+});   // state.user.currentUser, state.cart.hidden
 
 export default connect(mapStateToProps)(Header);
