@@ -16,7 +16,7 @@ const CartDropdown = ({ cartItems }) => (
   </div>
 );
 
-const mapStateToProps = ({ cart: { cartItems }}) => ({  // destructure state.cart.cartItems
+const mapStateToProps = ({ cart: { cartItems }}) => ({
   cartItems
 })
 
