@@ -69,7 +69,7 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 })
 
-const mapDispatchToProps = dispatch => ({ 
+const mapDispatchToProps = dispatch => ({ // it's not even necessary to write this out, but it makes things more clear (dispatch can be brought in as a prop)
   setCurrentUser: user => dispatch(setCurrentUser(user))  // first 'setCurrentUser' can be any name
 });  // set setCurrentUser to user by passing in argument (user), invoke setCurrentUser, and return the payload (user)
 
